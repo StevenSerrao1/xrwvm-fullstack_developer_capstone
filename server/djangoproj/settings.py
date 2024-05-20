@@ -144,3 +144,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend/build/static')
     ]
 
+os.environ.setdefault('DJANGO_SUPERUSER_PASSWORD', 'admin')
+print("DJANGO_SUPERUSER_PASSWORD:", os.getenv('DJANGO_SUPERUSER_PASSWORD'))
