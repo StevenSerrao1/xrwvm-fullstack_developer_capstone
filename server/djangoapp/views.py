@@ -99,6 +99,10 @@ def registration(request):
         return JsonResponse(data)
 
 # # Update the `get_dealerships` view to render the index page with
+<<<<<<< HEAD
+=======
+#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+>>>>>>> 23971e115ca3bcc3e7f544139726be1701b74e01
 def get_dealerships(request, state="All"):
     if(state == "All"):
         endpoint = "/fetchDealers"
