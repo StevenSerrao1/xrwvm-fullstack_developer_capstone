@@ -1,9 +1,7 @@
 # Uncomment the required imports before adding the code
 
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
-from django.contrib import messages
 from .restapis import get_request, analyze_review_sentiments, post_review
 
 from django.http import JsonResponse
@@ -23,12 +21,15 @@ logger = logging.getLogger(__name__)
 def get_cars(request):
     count = CarMake.objects.filter().count()
     print(count)
-    if(count == 0):
+    if (count == 0):
         initiate()
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append(
+            {"CarModel": car_model.name,
+             "CarMake": car_model.car_make.name}
+        )
     return JsonResponse({"CarModels":cars})
 
 
@@ -73,8 +74,6 @@ def logout_request(request):
 # Create a `registration` view to handle sign up request
 @csrf_exempt
 def registration(request):
-    context = {}
-
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
@@ -87,9 +86,9 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
-        # If not, simply log this is a new user
-        logger.debug("{} is new user".format(username))
+    except requests.exceptions.RequestException as e:
+        # Handle network request errors
+        print(f"Network request error: {e}")
 
     # If it is a new user
     if not username_exist:
