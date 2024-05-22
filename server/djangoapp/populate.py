@@ -1,5 +1,6 @@
 from .models import CarMake, CarModel
 
+
 def initiate():
     """Creates sample CarMake and CarModel instances.
 
@@ -17,7 +18,10 @@ def initiate():
     ]
 
     car_make_instances = [
-        CarMake.objects.create(name=data["name"], description=data["description"])
+        CarMake.objects.create(
+            name=data["name"],
+            description=data["description"]
+        )
         for data in car_make_data
     ]
 
@@ -92,7 +96,8 @@ def initiate():
             year=data["year"],
         )
 
-    print("Sample CarMake and CarModel instances created.")  # Informative message
+    print("Sample CarMake and CarModel instances created.") #IM
+
 
 if __name__ == "__main__":
     initiate()
