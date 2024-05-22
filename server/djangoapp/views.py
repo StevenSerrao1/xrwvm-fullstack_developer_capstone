@@ -31,6 +31,7 @@ def get_cars(request):
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels":cars})
 
+
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
@@ -47,6 +48,7 @@ def login_user(request):
         data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
+
 # Create a `logout_request` view to handle sign out request
 @csrf_exempt
 def logout_request(request):
@@ -57,10 +59,16 @@ def logout_request(request):
         # Get the username of the logged-out user
         username = request.user.username
         # Return a JSON response indicating successful logout
-        return JsonResponse({'message': f'User {username} logged out successfully.'})
+        return JsonResponse(
+            {'message': f'User {username} logged out successfully.'}
+        )
     else:
         # If the user is not authenticated, return an error message
-        return JsonResponse({'error': 'User is not logged in.'}, status=400)
+        return JsonResponse(
+            {'error': 'User is not logged in.'},
+            status=400
+        )
+
 
 # Create a `registration` view to handle sign up request
 @csrf_exempt
@@ -138,7 +146,8 @@ def add_review(request):
         try:
             response = post_review(data)
             return JsonResponse({"status": 200})
-        except:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+        except requests.exceptions.RequestException as e:
+        # Handle network request errors
+        print(f"Network request error: {e}")
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
