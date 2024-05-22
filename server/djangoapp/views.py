@@ -147,7 +147,6 @@ def add_review(request):
             response = post_review(data)
             return JsonResponse({"status": 200})
         except requests.exceptions.RequestException as e:
-        # Handle network request errors
-        print(f"Network request error: {e}")
+            print(f"Network request error: {e}")
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
