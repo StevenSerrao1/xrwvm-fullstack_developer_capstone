@@ -96,7 +96,7 @@ def initiate():
             year=data["year"],
         )
 
-    print("Sample CarMake and CarModel instances created.") #IM
+    print("Sample CarMake and CarModel instances created.")  # IM
 
 
 if __name__ == "__main__":
